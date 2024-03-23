@@ -10,16 +10,20 @@ const frames = createFrames({
 const handleRequest = frames(async (ctx) => {
   const pageIndex = Number(ctx.searchParams.pageIndex || 0);
 
-  const imageUrl = [`https://picsum.photos/seed/frames.js-1/300/200`,
+  const imageUrl = [
   'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg/250px-Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg',
-  ][1];
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flint_coney_island.jpg/320px-Flint_coney_island.jpg',
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Detroit_Coney.jpg/248px-Detroit_Coney.jpg',
+  'https://upload.wikimedia.org/wikipedia/commons/6/6d/Original_coney_dog.jpg',
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Skyline_Chili_Coneys.jpg/320px-Skyline_Chili_Coneys.jpg'
+  ][pageIndex % totalPages];
 
   return {
     image: (
       <div tw="flex flex-col">
         <img width={300} height={200} src={imageUrl} alt="Image" />
         <div tw="flex">
-          You guessed {ctx.searchParams.guess}
+          {ctx.searchParams.guess ? 'You guessed ' + ctx.searchParams.guess + 'dog!' : 'Make a guess!'}
         </div>
         <div tw="flex">
           This is slide {pageIndex + 1} / {totalPages}
