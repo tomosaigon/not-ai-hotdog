@@ -1,27 +1,47 @@
-// ./app/frames/route.tsx
 /* eslint-disable react/jsx-key */
 import { createFrames, Button } from "frames.js/next";
- 
-const frames = createFrames();
+
+const totalPages = 5;
+
+const frames = createFrames({
+  basePath: "/frames",
+});
+
 const handleRequest = frames(async (ctx) => {
+  const pageIndex = Number(ctx.searchParams.pageIndex || 0);
+
+  const imageUrl = `https://picsum.photos/seed/frames.js-${pageIndex}/300/200`;
+
   return {
     image: (
-      <span>
-        {ctx.pressedButton
-          ? `I clicked ${ctx.searchParams.value}`
-          : `Click some button`}
-      </span>
+      <div tw="flex flex-col">
+        <img width={300} height={200} src={imageUrl} alt="Image" />
+        <div tw="flex">
+          This is slide {pageIndex + 1} / {totalPages}
+        </div>
+      </div>
     ),
     buttons: [
-      <Button action="post" target={{ query: { value: "Yes" }}}>
-        Say Yes
+      <Button
+        action="post"
+        target={{
+          query: { pageIndex: (pageIndex - 1 + totalPages) % totalPages },
+        }}
+      >
+        ←
       </Button>,
-      <Button action="post" target={{ query: { value: "No" }}}>
-        Say No
+      <Button
+        action="post"
+        target={{
+          query: { pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+        }}
+      >
+        →
       </Button>,
     ],
+    textInput: "Type something!",
   };
 });
- 
+
 export const GET = handleRequest;
 export const POST = handleRequest;
