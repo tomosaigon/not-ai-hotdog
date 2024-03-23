@@ -10,12 +10,17 @@ const frames = createFrames({
 const handleRequest = frames(async (ctx) => {
   const pageIndex = Number(ctx.searchParams.pageIndex || 0);
 
-  const imageUrl = `https://picsum.photos/seed/frames.js-${pageIndex}/300/200`;
+  const imageUrl = [`https://picsum.photos/seed/frames.js-1/300/200`,
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg/250px-Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg',
+  ][1];
 
   return {
     image: (
       <div tw="flex flex-col">
         <img width={300} height={200} src={imageUrl} alt="Image" />
+        <div tw="flex">
+          You guessed {ctx.searchParams.guess}
+        </div>
         <div tw="flex">
           This is slide {pageIndex + 1} / {totalPages}
         </div>
@@ -25,21 +30,21 @@ const handleRequest = frames(async (ctx) => {
       <Button
         action="post"
         target={{
-          query: { pageIndex: (pageIndex - 1 + totalPages) % totalPages },
+          query: { guess: "hot", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
         }}
       >
-        ←
+        AI Hotdog
       </Button>,
       <Button
         action="post"
         target={{
-          query: { pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+          query: { guess: "not", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
         }}
       >
-        →
+        Not AI Hotdog
       </Button>,
     ],
-    textInput: "Type something!",
+    // textInput: "Type something!",
   };
 });
 
