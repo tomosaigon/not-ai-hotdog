@@ -56,6 +56,7 @@ const handleRequest = frames(async (ctx) => {
         action="post"
         target={{
           query: { guess: "hot", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+          pathname: "/frames",
         }}
       >
         AI Hotdog
@@ -64,6 +65,7 @@ const handleRequest = frames(async (ctx) => {
         action="post"
         target={{
           query: { guess: "not", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+          pathname: "/frames",
         }}
       >
         Not AI Hotdog
