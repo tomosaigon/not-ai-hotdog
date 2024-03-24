@@ -37,7 +37,7 @@ const handleRequest = frames(async (ctx) => {
     return {
       image: (
         <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
-          You've reached the end! {won ? 'You won!' : 'You lost!'}
+          You&apos;ve reached the end! {won ? 'You won!' : 'You lost!'}
         </div>
       ),
       imageOptions: {
