@@ -10,6 +10,13 @@ const frames = createFrames({
 const handleRequest = frames(async (ctx) => {
   if (ctx.message?.transactionId) {
     return {
+      accepts: [{
+        id: 'farcaster',
+        version: 'vNext'
+      }, {
+        id: 'xmtp',
+        version: 'vNext'
+      }],
       image: (
         <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
           Transaction submitted! {ctx.message.transactionId}
@@ -35,6 +42,13 @@ const handleRequest = frames(async (ctx) => {
   if (pageIndex >= totalPages) {
     const won = pastGuesses.split(',').filter((x) => x === 'not').length >= totalPages;
     return {
+      accepts: [{
+        id: 'farcaster',
+        version: 'vNext'
+      }, {
+        id: 'xmtp',
+        version: 'vNext'
+      }],
       image: (
         <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
           You&apos;ve reached the end! {won ? 'You won!' : 'You lost!'}
@@ -68,6 +82,13 @@ const handleRequest = frames(async (ctx) => {
   ][pageIndex % totalPages];
 
   return {
+    accepts: [{
+      id: 'farcaster',
+      version: 'vNext'
+    }, {
+      id: 'xmtp',
+      version: 'vNext'
+    }],
     image: (
       <div tw="flex flex-col">
         <img width={300} height={200} src={imageUrl} alt="Image" />
