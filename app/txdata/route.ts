@@ -13,7 +13,7 @@ import {
 } from "viem";
 // import { sepolia } from "viem/chains";
 import abi from "./contracts/erc721";
-const address = '0xf85d352c3c62cf0823aa58233509c7332e0bafd2'; // contract NotDog is ERC721, ERC721Enumerable, Ownable
+const address = '0xb620b3616d5649CC5369BD9e11a7b4f6Bc5fc313'; // contract NotDog is ERC721, ERC721Enumerable, Ownable
 
 export async function POST(
   req: NextRequest
@@ -38,7 +38,7 @@ export async function POST(
 
   return NextResponse.json({
     // chainId: "eip155:10", // OP Mainnet 10
-    chainId: "eip155:11155111", // OP Mainnet 10
+    chainId: "eip155:84532", // Base Sepolia Testnet
     method: "eth_sendTransaction",
     params: {
       abi,
