@@ -51,12 +51,9 @@ const handleRequest = frames(async (ctx) => {
       }],
       image: (
         <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
-          You&apos;ve reached the end! {won ? 'You won!' : 'You lost!'}
+          You&apos;ve reached the end! {won ? 'You won! Mint your NFT!' : 'You lost! No NFT for you :('}
         </div>
       ),
-      imageOptions: {
-        aspectRatio: "1:1",
-      },
       buttons: [
         won ? <Button action="tx" target="/txdata" post_url="/frames">
           Mint
@@ -91,12 +88,18 @@ const handleRequest = frames(async (ctx) => {
     }],
     image: (
       <div tw="flex flex-col">
-        <img width={300} height={200} src={imageUrl} alt="Image" />
         <div tw="flex">
-          {ctx.searchParams.guess ? 'You guessed ' + ctx.searchParams.guess + 'dog!' : 'Make a guess!'}
+          <h3 tw="m-0">AI Hotdog or Not? {pageIndex + 1} / {totalPages}</h3>
+        </div><div tw="flex">
+          <p>
+            {pageIndex === 0 ? 'We are training AI to recognize hotdogs and we need help from humans. Intelligent humans will be rewarded with an NFT.' : ''}
+            
+            Please identify which of these hotdogs are AI-generated.
+          </p>
         </div>
-        <div tw="flex">
-          This is slide {pageIndex + 1} / {totalPages}
+        <div tw="flex justify-center items-center ">
+          <img width={300} height={180} src={imageUrl} alt="Image" />
+          {ctx.searchParams.guess ? 'You last guessed ' + ctx.searchParams.guess + 'dog! And this one?' : 'Make a guess!'}
         </div>
       </div>
     ),
