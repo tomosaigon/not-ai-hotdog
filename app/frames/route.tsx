@@ -30,6 +30,34 @@ const handleRequest = frames(async (ctx) => {
   }
 
   const pageIndex = Number(ctx.searchParams.pageIndex || 0);
+  const pastGuesses = ctx.searchParams.guess ? (ctx.searchParams.pastGuesses ? ctx.searchParams.pastGuesses + ',' : '') + ctx.searchParams.guess : '';
+
+  if (pageIndex >= totalPages) {
+    const won = pastGuesses.split(',').filter((x) => x === 'not').length >= totalPages;
+    return {
+      image: (
+        <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
+          You've reached the end! {won ? 'You won!' : 'You lost!'}
+        </div>
+      ),
+      imageOptions: {
+        aspectRatio: "1:1",
+      },
+      buttons: [
+        won ? <Button action="tx" target="/txdata" post_url="/frames">
+          Mint
+        </Button> : <Button
+          action="post"
+          target={{
+            query: { pageIndex: 0 },
+            pathname: "/frames",
+          }}
+        >
+          Restart
+        </Button>
+      ],
+    };
+  }
 
   const imageUrl = [
     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg/250px-Coney_Island_hot_dog_from_American_Coney_Island_in_Detroit.jpg',
@@ -55,7 +83,7 @@ const handleRequest = frames(async (ctx) => {
       <Button
         action="post"
         target={{
-          query: { guess: "hot", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+          query: { pastGuesses, guess: "hot", pageIndex: pageIndex + 1 },
           pathname: "/frames",
         }}
       >
@@ -64,17 +92,13 @@ const handleRequest = frames(async (ctx) => {
       <Button
         action="post"
         target={{
-          query: { guess: "not", pageIndex: (pageIndex + 1 + totalPages) % totalPages },
+          query: { pastGuesses, guess: "not", pageIndex: pageIndex + 1 },
           pathname: "/frames",
         }}
       >
         Not AI Hotdog
       </Button>,
-      <Button action="tx" target="/txdata" post_url="/frames">
-        Mint
-      </Button>,
     ],
-    // textInput: "Type something!",
   };
 });
 
