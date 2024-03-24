@@ -86,6 +86,10 @@ const handleRequest = frames(async (ctx) => {
       id: 'xmtp',
       version: 'vNext'
     }],
+    headers: {
+      // Max cache age of 5 seconds
+      "Cache-Control": "max-age=5",
+    },
     image: (
       <div tw="flex flex-col">
         <div tw="flex">
